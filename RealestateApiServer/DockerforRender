@@ -1,4 +1,30 @@
-FROM eclipse-temurin:17-jdk-alpine
-VOLUME /tmp
-COPY target/*.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+# Use and official maven image to build the Springboot app
+FROM maven:3.8.4-openjdk-17 AS build
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the pom.xml file
+COPY pom.xml .
+
+# Copy the source code
+COPY src ./src
+
+# Build the application
+RUN mvn clean package spring-boot:repackage -DskipTests
+
+# Use an official runtime image to run the application
+FROM openjdk:17-jdk-slim
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the jar file from the build stage
+COPY --from=build /app/target/RealestateApiServer-0.0.1-SNAPSHOT.jar .
+
+# Expose the port that the app will run on
+EXPOSE 8080
+
+# Run the jar file  
+ENTRYPOINT ["java","-jar","RealestateApiServer-0.0.1-SNAPSHOT.jar"]
+
