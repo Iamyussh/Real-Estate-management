@@ -13,8 +13,7 @@ import com.server.RealestateApiServer.Dto.AgentDto;
 import com.server.RealestateApiServer.Entity.Agent;
 import com.server.RealestateApiServer.Service.AgentService;
 
-
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/agents")
 public class AgentController {
