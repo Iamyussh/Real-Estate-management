@@ -86,7 +86,7 @@ const AgentAuth = () => {
     try {
       if (isLogin) {
         // Login API
-        const response = await axios.post('http://localhost:8080/api/agents/login', {
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/agents/login`, {
           email: formData.email,
           password: formData.password,
         });
@@ -95,7 +95,7 @@ const AgentAuth = () => {
         navigate('/dashboard');
       } else {
         // Register API
-        const response = await axios.post('http://localhost:8080/api/agents/register', {
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/agents/register`, {
           name: formData.name,
           email: formData.email,
           phone: formData.phone,

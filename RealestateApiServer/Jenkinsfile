@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+    
+    environment {
+        SONAR_HOST_URL = 'http://localhost:9000'  // Update this with your SonarQube server URL
+        SONAR_TOKEN = credentials('sonar-token')  // Add this credential in Jenkins
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+        
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {  // Configure this in Jenkins
+                    sh 'mvn sonar:sonar \
+                        -Dsonar.projectKey=realestate-api-server \
+                        -Dsonar.host.url=${SONAR_HOST_URL} \
+                        -Dsonar.login=${SONAR_TOKEN}'
+                }
+            }
+        }
+    }
+    
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}

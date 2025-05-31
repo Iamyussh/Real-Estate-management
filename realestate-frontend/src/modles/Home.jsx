@@ -1,5 +1,4 @@
 import HeroSlider from "../components/HeroSlider";
-import HomeNavbar from "../components/HomeNavbar";
 import { FaHome, FaSearch, FaHandshake } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
@@ -24,8 +23,6 @@ const Home = () => {
 
     return (
         <div className="bg-gray-900 min-h-screen">
-            <HomeNavbar />
-            
             {/* Hero Section */}
             <HeroSlider 
                 headingText={
@@ -46,7 +43,7 @@ const Home = () => {
                 button1Text="Agent Portal"
                 button1Link="/agentAuth"
                 button2Text="Start Browsing"
-              button2Link="/properties"
+                button2Link="/properties"
             />
 
             {/* Features Section */}
